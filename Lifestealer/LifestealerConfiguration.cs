@@ -32,7 +32,7 @@
  
             this.Menu = MenuFactory.Create("Lifestealer");
             this.Key = this.Menu.Item("Combo Key", new KeyBind(32));
-            this.TargetItem = Menu.Item("Target", new StringList("Lock", "Default"));
+         //   this.TargetItem = Menu.Item("Target", new StringList("Lock", "Default"));
             this.Key.Item.Tooltip = "Hold this key to start combo mode.";
             this.UseBlinkPrediction = this.Menu.Item("Blink Prediction", new Slider(200, 0, 600));
             this.UseBlinkPrediction.Item.Tooltip = "Will blink to set distance from targeted hero. Set to 0 if you want to disable it.";

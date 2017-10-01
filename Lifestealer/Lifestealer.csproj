@@ -26,22 +26,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ensage">
-      <HintPath>..\Dota 2\EnsageSharp\References\Ensage.dll</HintPath>
+      <HintPath>..\..\..\..\..\Program Files (x86)\pX13gtJKz\References\Ensage.dll</HintPath>
     </Reference>
     <Reference Include="Ensage.Common">
-      <HintPath>..\Dota 2\EnsageSharp\References\Ensage.Common.dll</HintPath>
+      <HintPath>..\..\..\..\..\Program Files (x86)\pX13gtJKz\References\Ensage.Common.dll</HintPath>
     </Reference>
     <Reference Include="Ensage.SDK">
-      <HintPath>..\Dota 2\EnsageSharp\References\Ensage.SDK.dll</HintPath>
+      <HintPath>..\..\..\..\..\Program Files (x86)\pX13gtJKz\References\Ensage.SDK.dll</HintPath>
     </Reference>
     <Reference Include="PlaySharp.Toolkit">
-      <HintPath>..\Dota 2\EnsageSharp\References\PlaySharp.Toolkit.dll</HintPath>
+      <HintPath>..\..\..\..\..\Program Files (x86)\pX13gtJKz\References\PlaySharp.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX">
-      <HintPath>..\Dota 2\EnsageSharp\References\SharpDX.dll</HintPath>
+      <HintPath>..\..\..\..\..\Program Files (x86)\pX13gtJKz\References\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Mathematics">
-      <HintPath>..\Dota 2\EnsageSharp\References\SharpDX.Mathematics.dll</HintPath>
+      <HintPath>..\..\..\..\..\Program Files (x86)\pX13gtJKz\References\SharpDX.Mathematics.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />

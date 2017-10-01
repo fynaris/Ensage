@@ -71,9 +71,6 @@
         public item_mjollnir Mjollnir { get; private set; }
 
         [ItemBinding]
-        public item_sheepstick SheepStick { get; private set; }
-
-        [ItemBinding]
         public item_orchid Orchid { get; private set; }
 
         [ItemBinding]
