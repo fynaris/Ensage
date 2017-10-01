@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+
     using Ensage.Common.Menu;
     using Ensage.SDK.Menu;
 
@@ -20,7 +21,6 @@
                 {"item_mjollnir", true},
                 {"item_abyssal_blade", true},
                 {"item_heavens_halberd", true },
-                {"item_diffusal_blade", true },
                 {"item_diffusal_blade_2", true }
             };
 
@@ -32,6 +32,7 @@
  
             this.Menu = MenuFactory.Create("Lifestealer");
             this.Key = this.Menu.Item("Combo Key", new KeyBind(32));
+            this.TargetItem = Menu.Item("Target", new StringList("Lock", "Default"));
             this.Key.Item.Tooltip = "Hold this key to start combo mode.";
             this.UseBlinkPrediction = this.Menu.Item("Blink Prediction", new Slider(200, 0, 600));
             this.UseBlinkPrediction.Item.Tooltip = "Will blink to set distance from targeted hero. Set to 0 if you want to disable it.";
@@ -43,6 +44,7 @@
         public MenuItem<Slider> UseBlinkPrediction { get; }
         public MenuItem<AbilityToggler> AbilityToggler { get; }
         public MenuItem<KeyBind> Key { get; }
+        public MenuItem<StringList> TargetItem { get; }
         public MenuItem<AbilityToggler> ItemToggler { get; }
 
         public void Dispose()
