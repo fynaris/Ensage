@@ -1,14 +1,19 @@
 ﻿namespace Lifestealer
 {
-    using System;
     using System.ComponentModel.Composition;
     using System.Windows.Input;
+
     using Ensage;
     using Ensage.Common.Menu;
     using Ensage.SDK.Service;
     using Ensage.SDK.Service.Metadata;
 
-    [ExportPlugin("Lifestealer", StartupMode.Auto, "Jerffelly", "1.0.0.0", "Lifestealer Combo And Item Usage", 500, HeroId.npc_dota_hero_life_stealer)]
+    [ExportPlugin(
+        name: "Lifestealer",
+        mode: StartupMode.Auto,
+        author: "Jerffelly",
+        version: "2.0.0.0",
+        units: HeroId.npc_dota_hero_life_stealer)]
 
     public class Program : Plugin
     {
