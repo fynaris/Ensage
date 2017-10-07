@@ -26,6 +26,7 @@
     using PlaySharp.Toolkit.Logging;
 
     using UnitExtensions = Ensage.SDK.Extensions.UnitExtensions;
+    using Ensage.SDK.Abilities.npc_dota_hero_clinkz;
 
     [PublicAPI]
     public class Clinkz : KeyPressOrbwalkingModeAsync
@@ -77,9 +78,11 @@
         [ItemBinding]
         public item_diffusal_blade_2 DiffBlade2 { get; private set; }
 
+        public clinkz_strafe Strafe { get; private set; }
+        public clinkz_searing_arrows Arrows { get; private set; }
 
-        private Ability QAbi { get; set; }
-        private Ability WAbi { get; set; }
+        public clinkz_strafe QAbi { get;  set; }
+        public clinkz_searing_arrows WAbi { get; set; }
 
 
         public override async Task ExecuteAsync(CancellationToken token)
@@ -102,15 +105,15 @@
                 {             
                     if (!Silenced)
                     {
-                        if (this.Config.AbilityToggler.Value.IsEnabled(this.QAbi.Name) && this.QAbi.CanBeCasted() && this.Owner.IsInAttackRange(EnemyHero))
+                        if (this.Config.AbilityToggler.Value.IsEnabled(this.QAbi.Ability.Name) && this.QAbi.Ability.CanBeCasted() && this.Owner.IsInAttackRange(EnemyHero))
                         {
                             this.QAbi.UseAbility();
                             await Await.Delay(this.GetAbilityDelay(base.Owner, QAbi), token);
                         }
 
-                        if (this.Config.AbilityToggler.Value.IsEnabled(this.WAbi.Name) && !this.WAbi.IsAutoCastEnabled && this.WAbi.CanBeCasted() && this.Owner.IsInAttackRange(EnemyHero))
+                        if (this.Config.AbilityToggler.Value.IsEnabled(this.WAbi.Ability.Name) && !this.WAbi.Ability.IsAutoCastEnabled && this.WAbi.Ability.CanBeCasted() && this.Owner.IsInAttackRange(EnemyHero))
                         {
-                            this.WAbi.ToggleAutocastAbility();
+                            this.WAbi.Ability.ToggleAutocastAbility();
                             await Await.Delay(this.GetAbilityDelay(base.Owner, WAbi), token);
                         }
                     }
@@ -210,9 +213,11 @@
         }
 
         protected override void OnActivate()
+
+
         {
-            this.QAbi = UnitExtensions.GetAbilityById(this.Owner, AbilityId.clinkz_strafe);
-            this.WAbi = UnitExtensions.GetAbilityById(this.Owner, AbilityId.clinkz_searing_arrows);
+            this.WAbi = this.context.AbilityFactory.GetAbility<clinkz_searing_arrows>();
+            this.QAbi = this.context.AbilityFactory.GetAbility<clinkz_strafe>();
 
             this.Context.Inventory.Attach(this);
 
