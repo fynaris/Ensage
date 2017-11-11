@@ -8,7 +8,7 @@
     using Ensage.SDK.Service;
     using Ensage.SDK.Service.Metadata;
 
-    [ExportPlugin(name: "OneKeyKing", mode: StartupMode.Auto, author: "Jerffelly", version: "1.0.0.0", units: HeroId.npc_dota_hero_skeleton_king)]
+    [ExportPlugin(name: "OneKeyKing", mode: StartupMode.Auto, author: "Jerffelly", version: "2.0.0.0", units: HeroId.npc_dota_hero_skeleton_king)]
 
     public class Program : Plugin
     {

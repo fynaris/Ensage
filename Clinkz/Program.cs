@@ -8,7 +8,7 @@
     using Ensage.SDK.Service;
     using Ensage.SDK.Service.Metadata;
 
-    [ExportPlugin(name: "Clinkz", mode: StartupMode.Auto, author: "Jerffelly", version: "2.0.0.0", units: HeroId.npc_dota_hero_clinkz)]
+    [ExportPlugin(name: "Clinkz", mode: StartupMode.Auto, author: "Jerffelly", version: "3.0.0.0", units: HeroId.npc_dota_hero_clinkz)]
 
     public class Program : Plugin
     {

@@ -36,22 +36,25 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ensage">
-      <HintPath>C:\Program Files (x86)\pX13gtJKz\References\Ensage.dll</HintPath>
+      <HintPath>D:\Ensage\References\Ensage.dll</HintPath>
     </Reference>
     <Reference Include="Ensage.Common">
-      <HintPath>C:\Program Files (x86)\pX13gtJKz\References\Ensage.Common.dll</HintPath>
+      <HintPath>D:\Ensage\References\Ensage.Common.dll</HintPath>
     </Reference>
     <Reference Include="Ensage.SDK">
-      <HintPath>C:\Program Files (x86)\pX13gtJKz\References\Ensage.SDK.dll</HintPath>
+      <HintPath>D:\Ensage\References\Ensage.SDK.dll</HintPath>
     </Reference>
     <Reference Include="PlaySharp.Toolkit">
-      <HintPath>C:\Program Files (x86)\pX13gtJKz\References\PlaySharp.Toolkit.dll</HintPath>
+      <HintPath>D:\Ensage\References\PlaySharp.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX">
-      <HintPath>C:\Program Files (x86)\pX13gtJKz\References\SharpDX.dll</HintPath>
+      <HintPath>D:\Ensage\References\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D11">
+      <HintPath>D:\Ensage\References\SharpDX.Direct3D11.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Mathematics">
-      <HintPath>C:\Program Files (x86)\pX13gtJKz\References\SharpDX.Mathematics.dll</HintPath>
+      <HintPath>D:\Ensage\References\SharpDX.Mathematics.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />

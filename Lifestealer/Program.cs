@@ -12,7 +12,7 @@
         name: "Lifestealer",
         mode: StartupMode.Auto,
         author: "Jerffelly",
-        version: "2.0.0.0",
+        version: "3.0.0.0",
         units: HeroId.npc_dota_hero_life_stealer)]
 
     public class Program : Plugin

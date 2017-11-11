@@ -47,14 +47,6 @@
             this.TargetSelector = context.TargetSelector;
         }
 
-        public DiffusalBlade DiffBlade
-        {
-            get
-            {
-                return DiffBlade1 ?? (DiffusalBlade)DiffBlade2;
-            }
-        }
-
         [ItemBinding]
         public item_blink BlinkDagger { get; private set; }
 
@@ -74,10 +66,7 @@
         public item_orchid Orchid { get; private set; }
 
         [ItemBinding]
-        public item_diffusal_blade DiffBlade1 { get; private set; }
-
-        [ItemBinding]
-        public item_diffusal_blade_2 DiffBlade2 { get; private set; }
+        public item_diffusal_blade DiffBlade { get; private set; }
 
 
         private Ability Rage { get; set; }

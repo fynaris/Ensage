@@ -48,16 +48,11 @@
             this.TargetSelector = context.TargetSelector;
         }
 
-        public DiffusalBlade DiffBlade
-        {
-            get
-            {
-                return DiffBlade1 ?? (DiffusalBlade)DiffBlade2;
-            }
-        }
-
         [ItemBinding]
         public item_medallion_of_courage Medalion1 { get; private set; }
+
+        [ItemBinding]
+        public item_diffusal_blade DiffBlade { get; private set; }
 
         [ItemBinding]
         public item_solar_crest Medallion2 { get; private set; }
@@ -71,12 +66,6 @@
 
         [ItemBinding]
         public item_orchid Orchid { get; private set; }
-
-        [ItemBinding]
-        public item_diffusal_blade DiffBlade1 { get; private set; }
-
-        [ItemBinding]
-        public item_diffusal_blade_2 DiffBlade2 { get; private set; }
 
         public clinkz_strafe Strafe { get; private set; }
         public clinkz_searing_arrows Arrows { get; private set; }
