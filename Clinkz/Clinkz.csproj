@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{791F9469-0B62-45AB-A8CB-04CF2C8501EF}</ProjectGuid>
+    <ProjectGuid>{96244C5A-C89C-4C81-8463-6C108C15DD67}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Clinkz</RootNamespace>
     <AssemblyName>Clinkz</AssemblyName>
@@ -50,9 +50,6 @@
     <Reference Include="SharpDX">
       <HintPath>D:\Ensage\References\SharpDX.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.Direct3D11">
-      <HintPath>D:\Ensage\References\SharpDX.Direct3D11.dll</HintPath>
-    </Reference>
     <Reference Include="SharpDX.Mathematics">
       <HintPath>D:\Ensage\References\SharpDX.Mathematics.dll</HintPath>
     </Reference>
@@ -68,9 +65,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Clinkz.cs" />
-    <Compile Include="ClinkzConfiguration.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Configuration.cs" />
+    <Compile Include="Core.cs" />
+    <Compile Include="PluginConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
