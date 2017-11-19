@@ -1,5 +1,5 @@
-﻿using Ensage.Common.Extensions;
-using PlaySharp.Toolkit.Extensions;
+﻿
+using Ensage.Common.Extensions;
 
 namespace Clinkz
 {
@@ -11,15 +11,14 @@ namespace Clinkz
     using System.Threading.Tasks;
 
     using Ensage;
-    using Ensage.SDK.Abilities.Items;
-    using Ensage.SDK.Abilities.npc_dota_hero_clinkz;
+    using Ensage.Common.Threading;
     using Ensage.SDK.Extensions;
-    using Ensage.SDK.Geometry;
     using Ensage.SDK.Handlers;
     using Ensage.SDK.Helpers;
+    using Ensage.SDK.Abilities.Items;
+    using Ensage.SDK.Abilities.npc_dota_hero_clinkz;
     using Ensage.SDK.Inventory.Metadata;
     using Ensage.SDK.Orbwalker.Modes;
-    using Ensage.SDK.Prediction;
     using Ensage.SDK.Renderer.Particle;
     using Ensage.SDK.Service;
     using Ensage.SDK.TargetSelector;
@@ -56,25 +55,25 @@ namespace Clinkz
         
 
         [ItemBinding]
-        private item_mjollnir Mjollnir { get; set; }
+        public item_mjollnir Mjollnir { get; set; }
 
         [ItemBinding]
-        private item_bloodthorn Bloodthorn { get; set; }
+        public item_bloodthorn Bloodthorn { get; set; }
 
         [ItemBinding]
-        private item_orchid Orchid { get; set; }
+        public item_orchid Orchid { get; set; }
              
         [ItemBinding]
-        private item_sheepstick SheepStick { get; set; }
+        public item_sheepstick SheepStick { get; set; }
 
         [ItemBinding]
-        private item_solar_crest SolarCrest { get; set; }
+        public item_solar_crest SolarCrest { get; set; }
 
         [ItemBinding]
-        private item_diffusal_blade DiffusalBlade { get; set; }
+        public item_diffusal_blade DiffusalBlade { get; set; }
 
         [ItemBinding]
-        private item_medallion_of_courage Meddallion { get; set; }
+        public item_medallion_of_courage Meddallion { get; set; }
 
 
         public clinkz_strafe Strafe { get; set; }
@@ -86,7 +85,12 @@ namespace Clinkz
         {
             try
             {
+
+
                 _target = _targetSelector.Active.GetTargets().FirstOrDefault();
+
+
+
 
                 var unitMaxHp = EntityManager<Unit>.Entities.Where(x =>
                     x.IsValid &&
@@ -96,94 +100,96 @@ namespace Clinkz
                     x.Distance2D(Owner) < 400 &&
                     (x.NetworkName == "CDOTA_BaseNPC_Creep_Neutral" ||
                      x.NetworkName == "CDOTA_BaseNPC_Creep" ||
-                     x.NetworkName == "CDOTA_BaseNPC_Creep_Lane" ||
+                     x.NetworkName == "CDOTA_BaseNPC_Creep_Lane" || 
                      x.NetworkName == "CDOTA_BaseNPC_Creep_Siege")).OrderBy(x => x.MaximumHealth).LastOrDefault();
 
-                if (_target == null)
+                if (_target == null || _target.IsAttackImmune() || _target.IsInvulnerable())
                 {
                     Orbwalker.OrbwalkTo(null);
                     return;
                 }
 
 
-                if (_configuration.Abilitys.Value.IsEnabled(DeathPact.Ability.Name) && DeathPact.CanBeCasted &&
+                if (_configuration.AbilityManager.Value.IsEnabled(DeathPact.Ability.Name) && DeathPact.CanBeCasted && !_target.IsEthereal() &&
                     unitMaxHp != null)
                 {
 
                     DeathPact.UseAbility(unitMaxHp);
-                    await Task.Delay(DeathPact.GetCastDelay(unitMaxHp), token);
+                    await Await.Delay(DeathPact.GetCastDelay(unitMaxHp), token);
                 }
 
 
-                if (_configuration.Abilitys.Value.IsEnabled(Strafe.Ability.Name) && Strafe.CanBeCasted &&
+                if (_configuration.AbilityManager.Value.IsEnabled(Strafe.Ability.Name) && Strafe.CanBeCasted && !_target.IsEthereal() &&
                     Owner.IsInAttackRange(_target))
                 {
                     Strafe.UseAbility();
-                    await Task.Delay(Strafe.GetCastDelay(), token);
+                    await Await.Delay(Strafe.GetCastDelay(), token);
                 }
 
-                if (_configuration.Abilitys.Value.IsEnabled(Arrows.Ability.Name) && Arrows.CanBeCasted &&
+                if (_configuration.AbilityManager.Value.IsEnabled(Arrows.Ability.Name) && Arrows.CanBeCasted && !_target.IsEthereal() &&
                     !Arrows.Ability.IsAutoCastEnabled && Owner.IsInAttackRange(_target))
                 {
                     Arrows.Ability.ToggleAutocastAbility();
                 }
 
 
-                if (SolarCrest != null && SolarCrest.CanBeCasted && !Owner.IsAttacking() &&
-                    _configuration.ItemTabOne.Value.IsEnabled(SolarCrest.Ability.Name) &&
+                if (SolarCrest != null && SolarCrest.CanBeCasted && !Owner.IsAttacking() && !_target.IsEthereal() &&
+                    _configuration.ItemManager.Value.IsEnabled(SolarCrest.Ability.Name) && !_target.IsMagicImmune() &&
                     Owner.IsInAttackRange(_target))
                 {
                     SolarCrest.UseAbility(_target);
-                    await Task.Delay(SolarCrest.GetCastDelay(_target), token);
+                    await Await.Delay(SolarCrest.GetCastDelay(_target), token);
                 }
 
-                if (Meddallion != null && Meddallion.CanBeCasted && !Owner.IsAttacking() &&
-                    _configuration.ItemTabOne.Value.IsEnabled(Meddallion.Ability.Name) &&
+                if (Meddallion != null && Meddallion.CanBeCasted && !Owner.IsAttacking() && !_target.IsEthereal() &&
+                    _configuration.ItemManager.Value.IsEnabled(Meddallion.Ability.Name) && !_target.IsMagicImmune() &&
                     Owner.IsInAttackRange(_target))
                 {
                     Meddallion.UseAbility(_target);
-                    await Task.Delay(Meddallion.GetCastDelay(_target), token);
+                    await Await.Delay(Meddallion.GetCastDelay(_target), token);
                 }
 
-                if (DiffusalBlade != null && DiffusalBlade.CanBeCasted && !Owner.IsAttacking() &&
-                    _configuration.ItemTabOne.Value.IsEnabled(DiffusalBlade.Ability.Name) &&
+               
+                if (DiffusalBlade != null && DiffusalBlade.CanBeCasted  && !Owner.IsAttacking() && !_target.IsEthereal() &&
+                    _configuration.ItemManager.Value.IsEnabled(DiffusalBlade.Ability.Name) && !_target.IsMagicImmune() &&
                     Owner.IsInAttackRange(_target))
                 {
                     DiffusalBlade.Ability.UseAbility(_target);
-                    await Task.Delay(DiffusalBlade.GetCastDelay(_target), token);
-                }
+                    await Await.Delay(DiffusalBlade.GetCastDelay(_target), token);
 
-                if (Mjollnir != null && Mjollnir.CanBeCasted && !Owner.IsAttacking() &&
-                    Owner.IsInAttackRange(_target) && _configuration.ItemTabTwo.Value.IsEnabled(Mjollnir.Ability.Name))
+                }
+  
+                    if (Mjollnir != null && Mjollnir.CanBeCasted && !Owner.IsAttacking() &&
+                    Owner.IsInAttackRange(_target) && _configuration.ItemManager.Value.IsEnabled(Mjollnir.Ability.Name))
                 {
                     Mjollnir.UseAbility(Owner);
-                    await Task.Delay(Mjollnir.GetCastDelay(Owner), token);
+                    await Await.Delay(Mjollnir.GetCastDelay(Owner), token);
                 }
 
-                if (Bloodthorn != null && Bloodthorn.CanBeCasted && !Owner.IsAttacking() &&
-                    _configuration.ItemTabTwo.Value.IsEnabled(Bloodthorn.ToString()) && Owner.IsInAttackRange(_target))
+                if (Bloodthorn != null && Bloodthorn.CanBeCasted && !Owner.IsAttacking() && !_target.IsMagicImmune() &&
+                    _configuration.ItemManager.Value.IsEnabled(Bloodthorn.ToString()) && Owner.IsInAttackRange(_target))
                 {
                     Bloodthorn.UseAbility(_target);
-                    await Task.Delay(Bloodthorn.GetCastDelay(_target), token);
+                    await Await.Delay(Bloodthorn.GetCastDelay(_target), token);
                 }
 
-                if (SheepStick != null && SheepStick.CanBeCasted && !Owner.IsAttacking() &&
-                    _configuration.ItemTabOne.Value.IsEnabled(SheepStick.Ability.Name) &&
+                if (SheepStick != null && SheepStick.CanBeCasted && !Owner.IsAttacking() && !_target.IsMagicImmune() &&
+                    _configuration.ItemManager.Value.IsEnabled(SheepStick.Ability.Name) &&
                     Owner.IsInAttackRange(_target))
                 {
                     SheepStick.UseAbility(_target);
-                    await Task.Delay(SheepStick.GetCastDelay(_target), token);
+                    await Await.Delay(SheepStick.GetCastDelay(_target), token);
                 }
 
-                if (Orchid != null && Orchid.CanBeCasted && !Owner.IsAttacking() &&
-                    _configuration.ItemTabTwo.Value.IsEnabled(Orchid.Ability.Name) && Owner.IsInAttackRange(_target))
+                if (Orchid != null && Orchid.CanBeCasted && !Owner.IsAttacking() && !_target.IsMagicImmune() &&
+                    _configuration.ItemManager.Value.IsEnabled(Orchid.Ability.Name) && Owner.IsInAttackRange(_target))
                 {
                     Orchid.UseAbility(_target);
-                    await Task.Delay(Orchid.GetCastDelay(_target), token);
+                    await Await.Delay(Orchid.GetCastDelay(_target), token);
                 }
 
 
-            if (_target != null && (_target.IsInvulnerable() || UnitExtensions.IsAttackImmune(_target)))
+            if (_target != null && (_target.IsInvulnerable() || _target.IsAttackImmune()))
             {
                 Orbwalker.Move(Game.MousePosition);
             }
@@ -206,9 +212,9 @@ namespace Clinkz
         protected override void OnActivate()
         {
             base.OnActivate();
-            this.Context.Inventory.Attach(this);
+            Context.Inventory.Attach(this);
             
-            this.MenuKey.PropertyChanged += this.MenuKeyOnPropertyChanged;
+            MenuKey.PropertyChanged += MenuKeyOnPropertyChanged;
 
             Arrows = Context.AbilityFactory.GetAbility<clinkz_searing_arrows>();
             Strafe = Context.AbilityFactory.GetAbility<clinkz_strafe>();
@@ -217,16 +223,16 @@ namespace Clinkz
 
         protected override void OnDeactivate()
         {
-            this.Context.Inventory.Detach(this);
+            Context.Inventory.Detach(this);
           
-            this.MenuKey.PropertyChanged -= this.MenuKeyOnPropertyChanged;
-            UpdateManager.Unsubscribe(this.UpdateTargetParticle);
+            MenuKey.PropertyChanged -= MenuKeyOnPropertyChanged;
+            UpdateManager.Unsubscribe(UpdateTargetParticle);
             base.OnDeactivate();
         }
 
         private void MenuKeyOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
-            if (this.MenuKey)
+            if (MenuKey)
             {
                 if (_configuration.DrawTargetParticle)
                 {
